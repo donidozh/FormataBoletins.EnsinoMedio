@@ -8,7 +8,7 @@
 // @updateURL    https://github.com/donidozh/FormataBoletins.EnsinoMedio/edit/main/formata_boletinsEM.js
 // @match        http://sigeduca.seduc.mt.gov.br/ged/hwgedteladocumento.aspx?0,26
 // @copyright    2025, Elder Martins (elder.martins@edu.mt.gov.br)
-// @grant        none
+// @grant        GM_addStyle
 // ==/UserScript==
 
 (function() {
