@@ -3,9 +3,9 @@
 // @version      1.1
 // @description  Formata os Boletins do Ensino Médio sem quebra de página
 // @author       Elder Martins
-// @homepage     https://github.com/donidozh/FormataBoletins.EnsinoMedio/edit/main/formata_boletinsEM.js
-// @downloadURL  https://github.com/donidozh/FormataBoletins.EnsinoMedio/edit/main/formata_boletinsEM.js
-// @updateURL    https://github.com/donidozh/FormataBoletins.EnsinoMedio/edit/main/formata_boletinsEM.js
+// @homepage     https://github.com/donidozh/FormataBoletins.EnsinoMedio/edit/main/formata_boletinsEM.user.js
+// @downloadURL  https://github.com/donidozh/FormataBoletins.EnsinoMedio/edit/main/formata_boletinsEM.user.js
+// @updateURL    https://github.com/donidozh/FormataBoletins.EnsinoMedio/edit/main/formata_boletinsEM.user.js
 // @match        http://sigeduca.seduc.mt.gov.br/ged/hwgedteladocumento.aspx?0,26
 // @copyright    2025, Elder Martins (elder.martins@edu.mt.gov.br)
 // @grant        GM_addStyle
