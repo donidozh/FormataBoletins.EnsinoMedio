@@ -1,20 +1,19 @@
 // ==UserScript==
 // @name         Formatar Boletins - SIGEDUCA
-// @version      1.1
-// @description  Formata os Boletins do Ensino Médio sem quebra de página
+// @version      1.3
+// @description  Remove e reinsere page-breaks após cada 2 <div id="content"> nos boletins do Ensino Médio, com contador de boletins formatados
 // @author       Elder Martins
 // @homepage     https://github.com/donidozh/FormataBoletins.EnsinoMedio/edit/main/formata_boletinsEM.user.js
 // @downloadURL  https://github.com/donidozh/FormataBoletins.EnsinoMedio/edit/main/formata_boletinsEM.user.js
 // @updateURL    https://github.com/donidozh/FormataBoletins.EnsinoMedio/edit/main/formata_boletinsEM.user.js
 // @match        http://sigeduca.seduc.mt.gov.br/ged/hwgedteladocumento.aspx?0,26
-// @copyright    2025, Elder Martins (elder.martins@edu.mt.gov.br)
+// @copyright    2025, Elder Martins
 // @grant        GM_addStyle
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
 
-    // Estilo CSS para o botão
     GM_addStyle(`
         #removePageBreaksBtn {
             position: fixed;
@@ -35,47 +34,53 @@
         }
     `);
 
-    // Função para remover os page breaks
     function removerPageBreaks() {
-        const pageBreaks = document.querySelectorAll('div[style*="page-break-before: always"]');
-
-        pageBreaks.forEach(div => {
-            div.remove();
+        const breaks = document.querySelectorAll('div[style*="page-break-before: always"]');
+        breaks.forEach(div => {
+            if (div.textContent.trim() === '.') {
+                div.remove();
+            }
         });
-
-        alert(`Foram formatados ${pageBreaks.length} boletins da página.`);
     }
 
-    // Função para adicionar o botão
-    function adicionarBotao() {
-        // Verifica se o botão já existe
-        if (document.getElementById('removePageBreaksBtn')) {
-            return;
+    function inserirNovosPageBreaks() {
+        const contents = document.querySelectorAll('div#content');
+        for (let i = 1; i < contents.length; i++) {
+            if (i % 2 === 0) {
+                const breakDiv = document.createElement('div');
+                breakDiv.setAttribute('style', 'page-break-before: always');
+                breakDiv.textContent = '.';
+                contents[i - 1].after(breakDiv);
+            }
         }
+
+        // Mensagem igual à original
+        alert(`Foram formatados ${contents.length} boletins da página.`);
+    }
+
+    function adicionarBotao() {
+        if (document.getElementById('removePageBreaksBtn')) return;
 
         const botao = document.createElement('button');
         botao.id = 'removePageBreaksBtn';
         botao.textContent = 'Formatar Boletins';
-        botao.addEventListener('click', removerPageBreaks);
+        botao.addEventListener('click', () => {
+            removerPageBreaks();
+            inserirNovosPageBreaks();
+        });
 
         document.body.appendChild(botao);
     }
 
-    // Observa mudanças na página pois o conteúdo pode ser carregado dinamicamente
-    const observer = new MutationObserver(function(mutations) {
+    const observer = new MutationObserver(() => {
         if (document.body) {
             adicionarBotao();
             observer.disconnect();
         }
     });
 
-    // Inicia a observação
-    observer.observe(document.documentElement, {
-        childList: true,
-        subtree: true
-    });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
 
-    // Também tenta adicionar imediatamente caso o body já exista
     if (document.body) {
         adicionarBotao();
     }
