@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Formatar Boletins - SIGEDUCA
 // @version      1.3
-// @description  Remove e reinsere page-breaks após cada 2 <div id="content"> nos boletins do Ensino Médio, com contador de boletins formatados
+// @description  Formata os boletins do Ensino Médio para imprimir cada aluno em uma folha.
 // @author       Elder Martins
 // @homepage     https://github.com/donidozh/FormataBoletins.EnsinoMedio/edit/main/formata_boletinsEM.user.js
 // @downloadURL  https://github.com/donidozh/FormataBoletins.EnsinoMedio/edit/main/formata_boletinsEM.user.js
@@ -32,6 +32,11 @@
         #removePageBreaksBtn:hover {
             background-color: #45a049;
         }
+        @media print {
+            #removePageBreaksBtn {
+                display: none !important;
+            }
+        }
     `);
 
     function removerPageBreaks() {
@@ -54,7 +59,6 @@
             }
         }
 
-        // Mensagem igual à original
         alert(`Foram formatados ${contents.length} boletins da página.`);
     }
 
